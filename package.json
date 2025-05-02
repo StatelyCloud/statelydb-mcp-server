@@ -1,0 +1,36 @@
+{
+    "name": "statelydb-mcp-server",
+    "version": "1.0.0",
+    "description": "MCP Server for interacting with StatelyDB",
+    "main": "build/index.js",
+    "type": "module",
+    "bin": {
+      "stately-mcp-server": "./build/index.js"
+    },
+    "scripts": {
+      "build": "tsc",
+      "start": "node build/index.js",
+      "inspector": "tsc && npx @modelcontextprotocol/inspector node ./build/index.js",
+      "prepublishOnly": "npm run build"
+    },
+    "keywords": [
+      "mcp",
+      "stately",
+      "statelydb",
+      "schema",
+      "schema design"
+    ],
+    "author": "Stately Cloud, Inc.",
+    "license": "Apache-2.0",
+    "dependencies": {
+      "@modelcontextprotocol/sdk": "^1.5.0",
+      "zod": "^3.22.4"
+    },
+    "devDependencies": {
+      "@types/node": "^20.10.5",
+      "typescript": "^5.3.3"
+    },
+    "engines": {
+      "node": ">=16.0.0"
+    }
+  }
