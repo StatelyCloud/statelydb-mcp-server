@@ -18,13 +18,13 @@ curl -sL https://stately.cloud/install | sh
 Install the server globally:
 
 ```bash
-npm install -g stately-mcp-server
+npm install -g @stately-cloud/statelydb-mcp-server
 ```
 
 Alternatively, you can run it directly with npx:
 
 ```bash
-npx stately-mcp-server
+npx @stately-cloud/statelydb-mcp-server
 ```
 
 ### From local source
@@ -46,12 +46,12 @@ npm run build
 npm link
 ```
 
-This will create a global `stately-mcp-server` command that uses your local code. 
+This will create a global `statelydb-mcp-server` command that uses your local code. 
 
 To unlink later, you can run:
 
 ```bash
-npm unlink stately-mcp-server
+npm unlink statelydb-mcp-server
 ```
 
 ## Configuring with Claude Desktop
@@ -67,9 +67,9 @@ To use this MCP server with Claude Desktop, follow these steps:
 ```json
 {
   "mcpServers": {
-    "stately": {
+    "statelydb": {
       "command": "npx",
-      "args": ["-y", "stately-mcp-server"]
+      "args": ["-y", "@stately-cloud/statelydb-mcp-server"]
     }
   }
 }
