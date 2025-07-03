@@ -13,7 +13,7 @@ const execAsync = promisify(exec);
 
 const server = new McpServer({
   name: "statelydb-mcp-server",
-  version: "1.0.0",
+  version: require(path.join(__dirname, "../package.json")).version,
 });
 
 // Create a temporary directory for stately operations
