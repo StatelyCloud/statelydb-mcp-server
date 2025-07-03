@@ -1,0 +1,69 @@
+name: Release NPM Package
+run-name: Release NPM Package → ${{ github.event.push.compare }} by @${{ github.actor }}
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    # only run the CI if package.json was updated.
+    # otherwise there's no chance the version was changed
+    paths:
+      - package.json
+
+jobs:
+  release-js-sdk:
+    runs-on: self-hosted
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      # only release if the local version of the SDK is different from the remote version
+      - id: check
+        uses: EndBug/version-check@v2
+        with:
+          diff-search: true
+          file-name: package.json
+          file-url: https://unpkg.com/@stately-cloud/statelydb-mcp-server@latest/package.json
+          static-checking: localIsNew
+
+      - uses: actions/checkout@v4
+        if: steps.check.outputs.changed == 'true'
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        if: steps.check.outputs.changed == 'true'
+        with:
+          node-version-file: '.nvmrc'
+          cache: npm
+
+      - name: Install dependencies
+        if: steps.check.outputs.changed == 'true'
+        run: npm ci
+
+      - name: Build
+        if: steps.check.outputs.changed == 'true'
+        run: npm run build
+
+      - name: Publish v${{steps.check.outputs.version}} to NPM
+        if: steps.check.outputs.changed == 'true'
+        working-directory: sdk/js
+        run: npm publish
+        env:
+          npm_config_//registry.npmjs.org/:_authToken: ${{ secrets.NPM_TOKEN }}
+
+      - uses: ./.github/actions/notify-slack
+        if: steps.check.outputs.changed == 'true'
+        with:
+          url: ${{ secrets.SLACK_DEPLOYMENT_WEBHOOK_URL }}
+          text: >-
+            🎉 Publishing @stately-cloud/statelydb-mcp-server v${{steps.check.outputs.version}} to NPM <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|succeeded>
+
+      - uses: ./.github/actions/notify-slack
+        if: ${{ failure() }}
+        with:
+          url: ${{ secrets.SLACK_DEPLOYMENT_WEBHOOK_URL }}
+          text: >-
+            🚨 Publishing @stately-cloud/statelydb-mcp-server to NPM <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|failed>
+          username: ${{ github.actor }}
