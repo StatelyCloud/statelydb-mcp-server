@@ -46,7 +46,7 @@ npm run build
 npm link
 ```
 
-This will create a global `statelydb-mcp-server` command that uses your local code. 
+This will create a global `statelydb-mcp-server` command that uses your local code.
 
 To unlink later, you can run:
 

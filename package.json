@@ -1,7 +1,12 @@
 {
     "name": "@stately-cloud/statelydb-mcp-server",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "description": "Model Context Protocol (MCP) Server for interacting with StatelyDB",
+    "homepage": "https://docs.stately.cloud/schema/mcp/",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/StatelyCloud/statelydb-mcp-server.git"
+    },
     "bin": {
         "statelydb-mcp-server": "build/index.js"
     },
@@ -12,11 +17,12 @@
         "build/**"
     ],
     "publishConfig": {
-      "access": "public"
+        "access": "public"
     },
     "scripts": {
         "build": "tsc",
         "start": "node build/index.js",
+        "test": "node --test",
         "inspector": "tsc && npx @modelcontextprotocol/inspector node ./build/index.js",
         "prepublishOnly": "npm run build"
     },
