@@ -44,22 +44,20 @@ jobs:
 
       - name: Publish v${{steps.check.outputs.version}} to NPM
         if: steps.check.outputs.changed == 'true'
-        working-directory: sdk/js
         run: npm publish
         env:
           npm_config_//registry.npmjs.org/:_authToken: ${{ secrets.NPM_TOKEN }}
 
-      - uses: ./.github/actions/notify-slack
+      - uses: pcolby/post-to-slack@v1
         if: steps.check.outputs.changed == 'true'
         with:
           url: ${{ secrets.SLACK_DEPLOYMENT_WEBHOOK_URL }}
           text: >-
             🎉 Publishing @stately-cloud/statelydb-mcp-server v${{steps.check.outputs.version}} to NPM <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|succeeded>
 
-      - uses: ./.github/actions/notify-slack
+      - uses: pcolby/post-to-slack@v1
         if: ${{ failure() }}
         with:
           url: ${{ secrets.SLACK_DEPLOYMENT_WEBHOOK_URL }}
           text: >-
             🚨 Publishing @stately-cloud/statelydb-mcp-server to NPM <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|failed>
-          username: ${{ github.actor }}
