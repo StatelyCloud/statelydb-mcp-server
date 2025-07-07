@@ -1,7 +1,7 @@
 {
     "name": "@stately-cloud/statelydb-mcp-server",
     "version": "1.0.0",
-    "description": "Model Context Protocol (MCP) Server for interacting with StatelyDB",
+    "description": "Model Context Protocol (MCP) Server for interacting with StatelyDB.",
     "homepage": "https://docs.stately.cloud/schema/mcp/",
     "repository": {
         "type": "git",
