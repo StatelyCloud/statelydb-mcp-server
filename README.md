@@ -4,16 +4,38 @@ A [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) server that i
 
 ## Prerequisites
 
-- **Node.js**: Version 16.0.0 or higher
-- **Stately CLI**: Make sure the `stately` command is available in your PATH:
-
-```bash
-curl -sL https://stately.cloud/install | sh
-```
+- **Node.js**: Version 20 or higher
 
 ## Installation
 
-### From npm registry
+## Configuring for Claude Code
+
+Run `claude mcp add statelydb -- npx -y @stately-cloud/statelydb-mcp-server@latest` to add the MCP server to your Claude Code.
+
+## Configuring with Claude Desktop
+
+To use this MCP server with Claude Desktop, follow these steps:
+
+1. Open your Claude Desktop App configuration file:
+   - **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+   - **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+
+2. Add the server configuration to the `mcpServers` section:
+
+```json
+{
+  "mcpServers": {
+    "statelydb": {
+      "command": "npx",
+      "args": ["-y", "@stately-cloud/statelydb-mcp-server@latest"]
+    }
+  }
+}
+```
+
+3. Save the file and restart Claude Desktop.
+
+## Manually install from npm registry
 
 Install the server globally:
 
@@ -24,10 +46,10 @@ npm install -g @stately-cloud/statelydb-mcp-server
 Alternatively, you can run it directly with npx:
 
 ```bash
-npx @stately-cloud/statelydb-mcp-server
+npx @stately-cloud/statelydb-mcp-server@latest
 ```
 
-### From local source
+## From local source
 
 To install directly from your local source code:
 
@@ -53,29 +75,6 @@ To unlink later, you can run:
 ```bash
 npm unlink statelydb-mcp-server
 ```
-
-## Configuring with Claude Desktop
-
-To use this MCP server with Claude Desktop, follow these steps:
-
-1. Open your Claude Desktop App configuration file:
-   - **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
-   - **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
-
-2. Add the server configuration to the `mcpServers` section:
-
-```json
-{
-  "mcpServers": {
-    "statelydb": {
-      "command": "npx",
-      "args": ["-y", "@stately-cloud/statelydb-mcp-server"]
-    }
-  }
-}
-```
-
-3. Save the file and restart Claude Desktop.
 
 ## Available Tools
 
