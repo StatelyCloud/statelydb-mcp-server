@@ -13,6 +13,10 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    environment: publish
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -44,9 +48,7 @@ jobs:
 
       - name: Publish v${{steps.check.outputs.version}} to NPM
         if: steps.check.outputs.changed == 'true'
-        run: npm publish
-        env:
-          npm_config_//registry.npmjs.org/:_authToken: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --provenance
 
       - uses: pcolby/post-to-slack@v1
         if: steps.check.outputs.changed == 'true'
